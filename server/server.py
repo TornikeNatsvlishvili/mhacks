@@ -8,7 +8,7 @@ def root():
     raw_html = request.form['html']
     article = Article(raw_html)
     
-    return jsonify({'text': article.text(),
+    return jsonify({'text': article.text,
         'tokens': article.tokens()})
 
 if __name__ == "__main__":
