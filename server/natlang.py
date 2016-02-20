@@ -28,7 +28,8 @@ class Article:
 def read_html(url):
     try:
         import urllib
-        req=urllib.request.Request(url)
+        hdr = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36' }
+        req=urllib.request.Request(url, headers=hdr)
         from http.cookiejar import CookieJar
         cj = CookieJar()
         opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))

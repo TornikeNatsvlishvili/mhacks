@@ -26,10 +26,26 @@ function callback(contentJSON){
         var words = $(_v).text().split(" ");
         $(_v).empty();
         $.each(words, function(i, v) {
-            var $elem = $("<span>").text(v).attr("class", "token").attr("id", globalCount++);
+            
+            tuple = natlangJSON['pos-tag'][parseInt(i)]
+            _class = "inactive";
+            if(tuple[1].indexOf("NN") != -1){
+                _class = "token"
+            }
+            $elem = $("<span>").text(v + " ").attr("class", _class).attr("id", globalCount++);
+            
             $elem.mousemove(function(event) { 
-                var id = $(event.target).attr("id")
-                $('#tooltip').css({top: event.pageY, left: event.pageX}).text(natlangJSON['pos-tag'][parseInt(id)]).show();
+                id = $(event.target).attr("id")
+                $tooltip = $("#tooltip")
+                tuple = natlangJSON['pos-tag'][parseInt(id)]
+                if(tuple[1].indexOf("NN") != -1){
+                    $.ajax("http://45.33.74.171:5000/picture/" + tuple[0], function(data){
+                        $tooltip
+                            .css({top: event.pageY - $tooltip.height(), left: event.pageX - $tooltip.width()/2})
+                            .innerHTML('<img src="' + data + '"/>' )
+                            .show();
+                    });
+                }
             });
             $elem.mouseout(function() {
                 $('#tooltip').hide();

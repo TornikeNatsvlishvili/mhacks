@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
-from natlang import Article
+from natlang import Article, read_html
+import urllib.request
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -13,9 +15,9 @@ def root():
         'pos-tag': article.pos_tag()})
 
 @app.route("/picture/<query>")
-def search_image(name):
-    query = urllib.parse.urlencode({'q': name})
-    result = read_html('http://images.google.com/images?'+query+'&sout=1')
+def search_image(query):
+    query_param = urllib.parse.urlencode({'q': query})
+    result = read_html('http://images.google.com/images?'+query_param+'&sout=1')
     soup = BeautifulSoup(result,'html.parser')
     ps = soup.find_all("img")
     try:
@@ -26,13 +28,14 @@ def search_image(name):
         print(output)
 
 @app.route("/search/<query>")
-def search(name):
-    query = urllib.parse.urlencode({'q': name})
-    result = read_html('https://www.google.com/search?'+query)
+def search(query):
+    query_param = urllib.parse.urlencode({'q': query})
+    result = read_html('https://www.google.com/search?'+query_param)
     soup = BeautifulSoup(result,'html.parser')
-    ps = soup.find_all("a")
+    ps = soup.select("h3 > a")
+    # ps = soup.find_all("a")
     try:
-       value = ps[0].get('data-href')
+       value = ps[0].get('href')
        return value
     except Exception as e:
         output = format(e)
