@@ -1,5 +1,6 @@
 import nltk
 from bs4 import BeautifulSoup
+import re
 
 class Article:
     def __init__(self, raw_html):
@@ -24,6 +25,8 @@ class Article:
         ps = soup.find_all("p", class_="story-body-text")
         for p in ps:
             self.text += ' \n' + p.get_text()
+        self.text = re.sub('[!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]', '', self.text)
+
 
 def read_html(url):
     try:
@@ -45,4 +48,6 @@ if __name__ == "__main__":
     url = 'http://www.nytimes.com/2016/02/20/us/politics/republicans-speed-across-south-carolina-as-race-tightens.html'
     html_doc = read_html(url)
     article = Article(html_doc)
+    b = article.tokens()
+    a = article.pos_tags()
     print("done")
