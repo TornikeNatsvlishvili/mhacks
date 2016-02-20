@@ -12,5 +12,13 @@ def root():
         'tokens': article.tokens(),
         'pos-tag': article.pos_tag()})
 
+@app.route("/picture/<query>")
+def picture(query):
+    pass
+
+@app.route("/search/<query>")
+def search(query):
+    pass
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
