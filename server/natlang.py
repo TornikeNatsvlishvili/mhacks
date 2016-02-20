@@ -8,7 +8,12 @@ class Article:
         self.clean()
 
     def tokens(self):
-        return nltk.word_tokenize(self.text)
+        self.tokens = nltk.word_tokenize(self.text)
+        return self.tokens
+
+    def pos_tag(self):
+        self.pos_tags = nltk.pos_tag(self.tokens)
+        return self.pos_tags
 
     def clean(self):
         soup = BeautifulSoup(self.raw_html, 'html.parser')

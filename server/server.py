@@ -9,7 +9,8 @@ def root():
     article = Article(raw_html)
     
     return jsonify({'text': article.text,
-        'tokens': article.tokens()})
+        'tokens': article.tokens(),
+        'pos-tag': article.pos_tag()})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
