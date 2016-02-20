@@ -15,11 +15,15 @@ class Article:
         self.pos_tags = nltk.pos_tag(self.tokens)
         return self.pos_tags
 
+    def ne_chunk(self):
+        self.ne_chunk = nltk.ne_chunk(self.pos_tags, False)
+        return self.ne_chunk
+
     def clean(self):
         soup = BeautifulSoup(self.raw_html, 'html.parser')
         ps = soup.find_all("p", class_="story-body-text")
         for p in ps:
-            self.text += p.get_text()
+            self.text += ' \n' + p.get_text()
 
 def read_html(url):
     try:

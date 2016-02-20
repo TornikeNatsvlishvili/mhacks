@@ -1,3 +1,6 @@
+// inject tooltip
+$("body").append('<div id="tooltip"></div>')
+
 var formData = new FormData();
 formData.append("html", document.documentElement.outerHTML);
 
@@ -15,17 +18,27 @@ request.onreadystatechange = function() {
 }
 request.send(formData);
 
+var globalCount = 0;
 function callback(contentJSON){
-    // console.log(contentJSON)
+    var natlangJSON = contentJSON;
     
     $.each($(".story-body-text"), function(i, _v){
         var words = $(_v).text().split(" ");
         $(_v).empty();
         $.each(words, function(i, v) {
-            $(_v).append($("<span>").text(v));
+            var $elem = $("<span>").text(v).attr("class", "token").attr("id", globalCount++);
+            $elem.mousemove(function(event) { 
+                var id = $(event.target).attr("id")
+                $('#tooltip').css({top: event.pageY, left: event.pageX}).text(natlangJSON['pos-tag'][parseInt(id)]).show();
+            });
+            $elem.mouseout(function() {
+                $('#tooltip').hide();
+            });
+            
+            $(_v).append($elem);
         });
-    })
-    
+            
+    });
 
 }
 
