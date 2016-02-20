@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from .natlang import Article
+from natlang import Article
 
 app = Flask(__name__)
 
