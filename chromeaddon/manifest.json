@@ -9,6 +9,7 @@
    "default_popup": "popup.html"
   },
   "permissions": [
-   "activeTab"
+   "activeTab",
+   "http://45.33.74.171:5000/"
    ]
 }

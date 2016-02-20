@@ -1,7 +1,6 @@
 function executeEnhance() {
-  chrome.tabs.executeScript({
-    file: 'enhance.js'
-  }); 
+    chrome.tabs.executeScript({
+        file: 'enhance.js'
+    }); 
 }
-
 document.getElementById('btnClick').addEventListener('click', executeEnhance);
