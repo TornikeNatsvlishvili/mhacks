@@ -12,7 +12,8 @@ def root():
     
     return jsonify({'text': article.text,
         'tokens': article.tokens(),
-        'pos-tag': article.pos_tag()})
+        'pos-tag': article.pos_tag(),
+        'ne-chunk': article.ne_chunk() })
 
 @app.route("/picture/<query>")
 def search_image(query):
