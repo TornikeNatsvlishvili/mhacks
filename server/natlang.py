@@ -29,7 +29,7 @@ class Article:
                 temp_chunk = {'len': 0, 'tokens':[], 'label': chunk.label()};
                 for i in range(len(chunk)):
                     temp_chunk['tokens'].append({'phrase': chunk[i][0], 'tag': chunk[i][1]})
-                    temp_chunk['len'] += 1 
+                    temp_chunk['len'] += 1
                 self.ne_chunk.append(temp_chunk)
 
         return self.ne_chunk
@@ -40,6 +40,7 @@ class Article:
         for p in ps:
             self.text += ' \n' + p.get_text()
         self.text = re.sub('[!"#$%&\'()*+,-.:;<=>?@[\\]^_`{|}~]', '', self.text)
+        self.text = re.sub('\s+\”\s+', '" ', self.text)
 
 
 def read_html(url):
