@@ -1,4 +1,5 @@
 import nltk
+from nltk.tree import Tree
 from bs4 import BeautifulSoup
 import re
 
@@ -17,7 +18,20 @@ class Article:
         return self.pos_tags
 
     def ne_chunk(self):
-        self.ne_chunk = nltk.ne_chunk(self.pos_tags, False)
+        temp_ne_chunks = nltk.ne_chunk(self.pos_tags, False)
+        self.ne_chunk = []
+        for chunk in temp_ne_chunks:
+            if type(chunk) is tuple:
+                self.ne_chunk.append({'len': 1,
+                                       'tokens':[{'phrase': chunk[0], 'tag': chunk[1]}],
+                                       'label': None})
+            elif type(chunk) is Tree:
+                temp_chunk = {'len': 0, 'tokens':[], 'label': chunk.label()};
+                for i in range(len(chunk)):
+                    temp_chunk['tokens'].append({'phrase': chunk[i][0], 'tag': chunk[i][1]})
+                    temp_chunk['len'] += 1 
+                self.ne_chunk.append(temp_chunk)
+
         return self.ne_chunk
 
     def clean(self):
