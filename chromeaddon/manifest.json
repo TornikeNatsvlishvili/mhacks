@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Smart Reader",
-  "description": "Reader",
+  "name": "Informed",
+  "description": "Allows you dive deeper into an article rather than just skim it over",
   "version": "1.0",
   "content_scripts": [
     {
